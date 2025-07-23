@@ -20,11 +20,16 @@ const vendorRegister = async (req, res) => {
       password: hashedpassword,
     });
     await newVendor.save();
-    res.status(201).json({ message: "Vendor registered successfully" });
-    console.log("registered successfully");
+    return res.status(200).json({
+      success: true,
+      message: "Vendor registered successfully",
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error in register route:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
@@ -73,3 +78,5 @@ const getVendorById = async (req, res) => {
 };
 
 module.exports = { vendorRegister, vendorLogin, getAllVendors, getVendorById };
+
+// vendorRoutes.js
