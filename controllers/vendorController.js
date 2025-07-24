@@ -5,6 +5,7 @@ const dotEnv = require("dotenv");
 
 dotEnv.config();
 const secretKey = process.env.WhatIsYourName;
+
 const vendorRegister = async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -20,14 +21,13 @@ const vendorRegister = async (req, res) => {
       password: hashedpassword,
     });
     await newVendor.save();
-    return res.status(200).json({
-      success: true,
+    res.status(201).json({
       message: "Vendor registered successfully",
     });
+    console.log("registered");
   } catch (error) {
-    console.error("Error in register route:", error);
-    return res.status(500).json({
-      success: false,
+    console.error(error);
+    res.status(500).json({
       message: "Internal server error",
     });
   }
@@ -53,6 +53,9 @@ const vendorLogin = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+
 const getAllVendors = async (req, res) => {
   try {
     const vendors = await Vendor.find().populate("firm");

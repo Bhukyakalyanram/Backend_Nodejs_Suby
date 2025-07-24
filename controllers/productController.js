@@ -1,11 +1,11 @@
-const Firm = require("../models/Firm");
-const Product = require("../models/Product");
-
-const multer = require("multer");
+const Firm = require('../models/Firm');
+const Product = require('../models/Product');
+const multer = require('multer');
+const path = require('path');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -21,7 +21,7 @@ const addProduct = async (req, res) => {
     const firmId = req.params.firmId;
     const firm = await Firm.findById(firmId);
     if (!firm) {
-      return res.status(404).json({ message: "Firm not found" });
+      return res.status(404).json({ message: 'Firm not found' });
     }
     const product = new Product({
       productName,
@@ -38,7 +38,7 @@ const addProduct = async (req, res) => {
     res.status(201).json(savedProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -48,7 +48,7 @@ const getProductByFirm = async (req, res) => {
     const firm = await Firm.findById(firmId);
 
     if (!firm) {
-      return res.status(404).json({ error: "No firm found" });
+      return res.status(404).json({ error: 'No firm found' });
     }
 
     const restaurantName = firm.firmName;
@@ -57,7 +57,7 @@ const getProductByFirm = async (req, res) => {
     res.status(200).json({ restaurantName, products });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -66,16 +66,16 @@ const deleteProductById = async (req, res) => {
     const productId = req.params.productId;
     const deletedProduct = await Product.findByIdAndDelete(productId);
     if (!deletedProduct) {
-      return res.status(404).json({ error: "No Product found" });
+      return res.status(404).json({ error: 'No Product found' });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
 module.exports = {
-  addProduct: [upload.single("image"), addProduct],
+  addProduct: [upload.single('image'), addProduct],
   getProductByFirm,
   deleteProductById,
 };
