@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
   productName: {
@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
     type: [
       {
         type: String,
-        enum: ["veg", "non-veg"],
+        enum: ['veg', 'non-veg'],
       },
     ],
   },
@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
   bestSeller: {
-    type: String,
+    type: Boolean,
   },
   description: {
     type: String,
@@ -29,10 +29,10 @@ const productSchema = new mongoose.Schema({
   firm: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Firm",
+      ref: 'Firm',
     },
   ],
 });
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
